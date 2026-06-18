@@ -616,49 +616,37 @@ body[data-page="home"] .hero {
 .hero-grid,
 .detail-grid {
   align-items: center;
-  grid-template-columns: minmax(0, 1.08fr) minmax(20rem, 0.92fr)
+  grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 0.6fr);
+  gap: 3rem;
 }
 
 .hero-grid {
   gap: clamp(2rem, 4vw, 4.5rem)
 }
-
-.hero-copy,
-.detail-copy {
-    max-width: 650px;   /* increase width */
-    width: 100%;
+.hero-copy ul {
+  margin-left: 4.5rem;
+  padding-left: 1.5rem;
+  font-family: "Times New Roman", serif;
+  font-size: 1.1rem;
 }
-
-.hero-copy p,
-.detail-copy p {
-    text-align: justify;
-    line-height: 1.8;
+.hero-art {
+  margin-top: -15rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
+  margin-left: 5%;
 }
-
 .hero-art img {
-      width: 900px;
-    position: relative;
-    top: -150px;
-       right: -50px;
+  width: 900px;
+  height: auto;
+  max-width: none;
 }
-
-.hero-copy ul,
-.detail-copy ul {
-    width: fit-content;
-    margin: 2px auto;
-     margin-left: 125px;
-    text-align: left;
-    font-family: Times New Roman;
-    font-size: 1.1rem;
-}
-
 .hero-copy {
-    max-width: 700px !important;
-    width: 100%;
-}
-
-.hero-grid {
-    grid-template-columns: 1.4fr 0.8fr !important;
+  max-width: 60rem;
+  width: 100%;
+  text-align: left;
+  margin-inline: 0
 }
 
 .hero-copy h1,
@@ -1269,13 +1257,13 @@ body[data-page="career"] .hero-copy h1 .gradient-text {
 .about-feature-panel {
   position: relative;
   display: grid;
-  grid-template-columns: 1.1fr .9fr;
-  gap: 0;
+  grid-template-columns: 65% 35%;
+  gap: 1.5rem;
   overflow: hidden;
   padding: 0;
-  align-items: stretch;
+  align-items: center;
   border-radius: var(--radius);
-  margin: 1.5rem 0
+  margin: 1.5rem 0;
 }
 
 .about-feature-copy,
@@ -1288,8 +1276,32 @@ body[data-page="career"] .hero-copy h1 .gradient-text {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 2.5rem 2.2rem;
-  overflow: hidden
+  padding: 2rem;
+  overflow: hidden;
+  text-align: left;
+}
+.about-detail-card {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 1fr; /* text area wider */
+    gap: 2rem;
+}
+
+.about-detail-copy {
+    width: 100%;
+    min-width: 0;
+}
+
+.about-detail-copy p,
+.about-feature-copy p,
+.about-detail-card .muted {
+    text-align: justify !important; 
+    text-justify: inter-word;/* remove justify */
+    line-height: 1.5 !important;
+    word-spacing: normal !important;
+    letter-spacing: normal !important;
+    hyphens: none !important;
+    overflow-wrap: break-word !important;
 }
 
 .about-feature-copy .eyebrow {
@@ -1341,13 +1353,11 @@ body[data-page="career"] .hero-copy h1 .gradient-text {
 
 .about-feature-image-frame {
   position: relative;
-  width: 100%;
-  min-height: clamp(22rem, 38vw, 28rem);
+  width: 85%;
+  min-height: 320px;
+  margin: auto;
   overflow: hidden;
-  border-radius: 0 var(--radius) var(--radius) 0;
-  background: #e8e0f8;
-  border: 0;
-  box-shadow: none
+  border-radius: 16px;
 }
 
 .about-feature-image-frame img {
@@ -1356,7 +1366,7 @@ body[data-page="career"] .hero-copy h1 .gradient-text {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center center ;
   display: block;
   margin: 0;
   border-radius: 0;
@@ -1404,23 +1414,18 @@ body[data-page="career"] .hero-copy h1 .gradient-text {
 }
 
 .about-detail-media {
-  min-width: 0;
+  min-width: zero;
   min-height: 100%;
   background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.4rem 1.5rem
 }
 
 .about-detail-media img {
-  width: min(100%, 18rem);
-  height: 13rem;
+  width: min(100%, 14rem);
+  height: auto;
   object-fit: contain;
-  display: block;
-  mix-blend-mode: multiply;
-  transform: scale(1.08);
-  transform-origin: center
 }
 
 .about-detail-media-card-reverse:not(.about-detail-card-partner) .about-detail-media img {
@@ -1440,15 +1445,9 @@ body[data-page="career"] .hero-copy h1 .gradient-text {
 
 .about-detail-card-partner .about-detail-media img {
   width: 100%;
-  height: 100%;
+  height: auto;
+  max-height: 260px;
   object-fit: cover;
-  object-position: center 30%;
-  transform: none;
-  border-radius: 0;
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0
 }
 
 .about-detail-card-partner:hover .about-detail-media img {
@@ -1463,8 +1462,9 @@ body[data-page="career"] .hero-copy h1 .gradient-text {
 .about-detail-copy {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 1.6rem 1.75rem
+  justify-content: flex-start;
+  padding: 2rem;
+  text-align: left;
 }
 
 .about-detail-card h3 {
@@ -1831,9 +1831,15 @@ body[data-page="career"] .hero-copy h1 .gradient-text {
   gap: .9rem;
   color: #1b1327;
   font-family: Georgia, "Times New Roman", serif;
-  line-height: 1.6;
+  line-height: 1.8;
   text-align: left
+  
 }
+
+.list {
+    gap: 0.8rem;
+}
+
 
 .check {
   width: 1.7rem;
