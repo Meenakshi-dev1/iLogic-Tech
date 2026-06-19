@@ -1326,8 +1326,8 @@ body[data-page="career"] .hero-copy h1 .gradient-text {
 
 .about-feature-panel .lead {
   margin: 0 0 .9rem;
-  font-size: 1rem;
-  line-height: 1.75
+  font-size: 1.16rem;
+  line-height: 1.7
 }
 
 .about-feature-tags {
@@ -1423,7 +1423,7 @@ body[data-page="career"] .hero-copy h1 .gradient-text {
 }
 
 .about-detail-media img {
-  width: min(100%, 14rem);
+  width: min(100%, 20rem);
   height: auto;
   object-fit: contain;
 }
