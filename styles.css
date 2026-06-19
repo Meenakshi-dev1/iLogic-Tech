@@ -5998,3 +5998,18 @@ body.gallery-modal-open .site-header {
 }
 
 
+
+
+html {
+    scroll-behavior: smooth;
+}
+.contact-form input {
+  background: rgba(237, 229, 255, 0.55) !important;
+  height: 72px !important;
+}
+.partner-grid .logo-card img[src*="languagecert"] {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  transform: scale(1.2) !important;
+}
+
