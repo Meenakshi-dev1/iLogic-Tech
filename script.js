@@ -891,10 +891,10 @@
         ["Multi", "Branch Ready"],
         ["Cloud", "Access"]
       ],
-      video: {
-        src: "Video/tailor.mp4",
-        cues: ["Manage measurements, trials, and delivery schedules in one dashboard.", "Track boutique orders, customer profiles, and billing without manual logs.", "Coordinate staff, reminders, and repeat orders across outlets.", "A modern workflow for traditional craftsmanship."]
-      },
+    image: {
+    src: "tailor.jpeg"
+},
+
       sections: [{
         title: "Why Choose iLogic Tech's Tailoring Software?",
         body: ["Built for tailors and boutiques, this system keeps every measurement, fitting, and delivery date organized in one clean workflow.", "It reduces rework, improves turnaround time, and helps teams deliver a more professional customer experience."]
@@ -1842,15 +1842,20 @@
     }).join("");
   }
 
-  function solutionVideoPlayer(item, detail) {
-    if (!detail.video) return "";
-    return '<article class="glass solution-video-card reveal" data-solution-player>' +
-      '<div class="solution-video-header"><div><p class="solution-video-kicker">Product Walkthrough</p><h3>' + detail.headline + '</h3></div><div class="solution-video-actions"><button type="button" class="solution-video-icon" data-video-minimize aria-label="Minimize video">-</button><button type="button" class="solution-video-icon" data-video-float aria-label="Small screen mode">&#9635;</button><button type="button" class="solution-video-icon" data-video-captions aria-pressed="true" aria-label="Toggle captions">CC</button><button type="button" class="solution-video-icon" data-video-fullscreen aria-label="Fullscreen video">&#x26F6;</button></div></div>' +
-      '<div class="solution-video-stage" data-video-drag-handle><video class="solution-video-element" id="solutionVideo" preload="metadata" playsinline><source src="' + detail.video.src + '" type="video/mp4" /></video><button class="solution-video-overlay" type="button" data-video-toggle aria-label="Play or pause video">&#9654;</button><div class="solution-video-caption" id="solutionVideoCaption"></div><div class="solution-video-mini-label">Small Screen Mode</div></div>' +
-      '<div class="solution-video-controls"><button type="button" class="btn btn-secondary solution-video-toggle" data-video-toggle>Play</button><input type="range" min="0" max="100" value="0" class="solution-video-progress" data-video-progress aria-label="Video progress" /><span class="solution-video-time" id="solutionVideoTime">00:00 / 00:00</span><button type="button" class="solution-video-icon" data-video-mute aria-label="Mute video">&#128266;</button><input type="range" min="0" max="1" step="0.05" value="1" class="solution-video-volume" data-video-volume aria-label="Volume control" /></div>' +
-      '</article>';
-  }
-
+ function solutionVideoPlayer(item, detail) {
+  // We removed the "!detail.video" check so the component renders even without a video file
+  const imageSource = detail.image ? detail.image.src : (detail.video ? detail.video.src : null);
+  const hasImage = Boolean(imageSource);
+  
+  return '<article class="glass solution-video-card reveal" data-solution-player>' +
+    '<div class="solution-video-header">' +
+      '<div><p class="solution-video-kicker">Product Walkthrough</p><h3>' + detail.headline + '</h3></div>' +
+    '</div>' +
+    '<div class="solution-video-stage">' +
+      (hasImage ? '<img class="solution-image" src="' + imageSource + '" alt="' + detail.headline + '" style="width:100%; height:auto; cursor:pointer;">' : '') +
+    '</div>' +
+  '</article>';
+}
   function solutionSummaryCard(item, detail) {
     const firstItems = detail.sections.find(section => section.items && section.items.length);
     const quickPoints = firstItems ? firstItems.items.slice(0, 5) : item[3];
@@ -1858,12 +1863,12 @@
   }
 
   function solutionPageContent(item, detail) {
-    const hasVideo = Boolean(detail.video && detail.video.src);
+    const hasMedia = Boolean((detail.video && detail.video.src) || (detail.image && detail.image.src));
     return header(false) +
-      '<main class="solution-detail-page' + (hasVideo ? ' has-video' : ' no-video') + '">' +
+      '<main class="solution-detail-page' + (hasMedia ? ' has-video' : ' no-video') + '">' +
       '<section class="detail-hero solution-hero-shell"><div class="container">' +
       '<div class="solution-page-header reveal"><span class="eyebrow">' + detail.eyebrow + '</span><h1 class="gradient-text">' + detail.headline + '</h1><p class="lead">' + detail.intro + '</p><div class="tag-list">' + item[3].map(tag => '<span>' + tag + '</span>').join("") + '</div><div class="detail-actions" style="margin-top:1.5rem;"><a class="btn btn-primary" href="index.html#contact">Request a Demo</a><a class="btn btn-secondary" href="index.html#solutions">Back to Solutions</a></div></div>' +
-      (hasVideo ? '<div class="solution-hero-grid">' + solutionVideoPlayer(item, detail) + solutionSummaryCard(item, detail) + '</div>' : '<div class="solution-content-hero">' + solutionSummaryCard(item, detail) + '</div>') +
+      (hasMedia ? '<div class="solution-hero-grid">' + solutionVideoPlayer(item, detail) + solutionSummaryCard(item, detail) + '</div>' : '<div class="solution-content-hero">' + solutionSummaryCard(item, detail) + '</div>') +
       solutionStats(detail.stats || [], item[0]) +
       '</div></section>' +
       solutionSections(detail) +
@@ -2450,6 +2455,18 @@ function projectsPage() {
       window.location.href = "mailto:info@ilogic.com.sg?subject=" + encodeURIComponent(String(data.get("subject"))) + "&body=" + encodeURIComponent(body);
     });
   }
+
+  // Add click handler for tailor image
+  const tailorImage = document.querySelector(".solution-image");
+  if (tailorImage) {
+    tailorImage.addEventListener("click", function() {
+      // Show alert for enquiry
+      alert("Check for Enquiry - Please fill out the contact form to proceed");
+      // Redirect to contact page
+      window.location.href = "index.html#contact";
+    });
+  }
+
   const hiringWidgetEl = document.getElementById("hiringWidget");
   const hiringChatbotEl = document.getElementById("hiringChatbot");
   const hiringMessagesEl = document.getElementById("hiringMessages");
