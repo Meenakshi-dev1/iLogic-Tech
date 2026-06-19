@@ -891,10 +891,10 @@
         ["Multi", "Branch Ready"],
         ["Cloud", "Access"]
       ],
-      video: {
-        src: "Video/tailor.mp4",
-        cues: ["Manage measurements, trials, and delivery schedules in one dashboard.", "Track boutique orders, customer profiles, and billing without manual logs.", "Coordinate staff, reminders, and repeat orders across outlets.", "A modern workflow for traditional craftsmanship."]
-      },
+    image: {
+    src: "tailor.jpeg"
+},
+
       sections: [{
         title: "Why Choose iLogic Tech's Tailoring Software?",
         body: ["Built for tailors and boutiques, this system keeps every measurement, fitting, and delivery date organized in one clean workflow.", "It reduces rework, improves turnaround time, and helps teams deliver a more professional customer experience."]
@@ -1842,33 +1842,18 @@
     }).join("");
   }
 
-  function solutionVideoPlayer(item, detail) {
-  if (!detail.video) return '';
-
-  return '<article class="solution-video-card reveal">' +
+ function solutionVideoPlayer(item, detail) {
+  // We removed the "!detail.video" check so the component renders even without a video file
+  const imageSource = detail.image ? detail.image.src : (detail.video ? detail.video.src : null);
+  const hasImage = Boolean(imageSource);
+  
+  return '<article class="glass solution-video-card reveal" data-solution-player>' +
     '<div class="solution-video-header">' +
-      '<div><p class="solution-video-kicker">Product Preview</p></div>' +
+      '<div><p class="solution-video-kicker">Product Walkthrough</p><h3>' + detail.headline + '</h3></div>' +
     '</div>' +
-
-    '<div class="solution-video-stage" data-video-drag-handle>' +
-
-      '<a href="index.html#contact">' +
-        '<img class="solution-video-element" ' +
-          'src="tailor.jpeg" ' +
-          'alt="Tailor Image" ' +
-          'title="Click Here For Enquiry" ' +
-          'style="width:100%;height:100%;object-fit:cover;cursor:pointer;">' +
-      '</a>' +
-
-      '<div class="solution-video-mini-label">Small Screen Mode</div>' +
-      '<div class="solution-video-caption" id="solutionVideoCaption"></div>' +
-
+    '<div class="solution-video-stage">' +
+      (hasImage ? '<img class="solution-image" src="' + imageSource + '" alt="' + detail.headline + '" style="width:100%; height:auto; cursor:pointer;">' : '') +
     '</div>' +
-
-    '<div class="solution-video-controls">' +
-      '<button type="button" class="btn btn-primary">Enquiry</button>' +
-    '</div>' +
-
   '</article>';
 }
   function solutionSummaryCard(item, detail) {
@@ -1878,12 +1863,12 @@
   }
 
   function solutionPageContent(item, detail) {
-    const hasVideo = Boolean(detail.video && detail.video.src);
+    const hasMedia = Boolean((detail.video && detail.video.src) || (detail.image && detail.image.src));
     return header(false) +
-      '<main class="solution-detail-page' + (hasVideo ? ' has-video' : ' no-video') + '">' +
+      '<main class="solution-detail-page' + (hasMedia ? ' has-video' : ' no-video') + '">' +
       '<section class="detail-hero solution-hero-shell"><div class="container">' +
       '<div class="solution-page-header reveal"><span class="eyebrow">' + detail.eyebrow + '</span><h1 class="gradient-text">' + detail.headline + '</h1><p class="lead">' + detail.intro + '</p><div class="tag-list">' + item[3].map(tag => '<span>' + tag + '</span>').join("") + '</div><div class="detail-actions" style="margin-top:1.5rem;"><a class="btn btn-primary" href="index.html#contact">Request a Demo</a><a class="btn btn-secondary" href="index.html#solutions">Back to Solutions</a></div></div>' +
-      (hasVideo ? '<div class="solution-hero-grid">' + solutionVideoPlayer(item, detail) + solutionSummaryCard(item, detail) + '</div>' : '<div class="solution-content-hero">' + solutionSummaryCard(item, detail) + '</div>') +
+      (hasMedia ? '<div class="solution-hero-grid">' + solutionVideoPlayer(item, detail) + solutionSummaryCard(item, detail) + '</div>' : '<div class="solution-content-hero">' + solutionSummaryCard(item, detail) + '</div>') +
       solutionStats(detail.stats || [], item[0]) +
       '</div></section>' +
       solutionSections(detail) +
@@ -1892,7 +1877,7 @@
   }
 
   function homePage() {
-    app.innerHTML = header(true) + '<main><section class="hero" id="home" data-country-display="SG"><div class="container hero-grid"><div class="hero-copy reveal is-visible"><span class="eyebrow"><span class="eyebrow-dot"></span>Integrated Technology Solutions</span><h1><span class="gradient-text">Integrated POS Systems & IT Solutions for Businesses in Singapore and India</span><span class="subline"><h1>Technology Solutions for Business Growth</h1></span></h1><p class="lead" style= "text-align:justify; font-family:timesnewroman;">iLogic Tech Pte Ltd is a Singapore-headquartered global technology and consulting company delivering end-to-end digital transformation, testing infrastructure, and international education solutions.</p> <p class="lead" style="margin-top:0.5rem;text-align:justify; font-family:timesnewroman;">The organization operates through a multi-vertical ecosystem, integrating: <br> Advanced Software Development <br> IT Infrastructure & Cybersecurity <br> Global Test Centre Operations <br> International Education & Certification Services </p>  <p class="lead" style="margin-top:0.5rem;text-align:justify; font-family:timesnewroman;">With a strong presence across Singapore, India, Kuwait, and Ireland. iLogic Tech combines technology innovation with operational excellence to deliver scalable and future-ready solutions.</p>   <p class="lead" style="margin-top:0.5rem;text-align:justify; font-family:timesnewroman;">We specialize in developing customized platforms that streamline business operations & we are official partner of LanguageCert, Celpip(Prometric) & BeingCert. In addition, we offer industry-focused internship training programs that provide hands-on experience through real-time projects, equipping candidates with practical skills aligned with current market demands.</p><div class="hero-actions"><a class="btn btn-primary" href="#products">Explore Products</a><a class="btn btn-secondary" href="#about">Learn More</a></div><div class="partner-lockup"><p>Official Partner</p><div class="partner-lockup-row"><a class="partner-lockup-frame" href="exam.html#exam-celpip"><img src="' + celpipPartnerLogo + '" alt="CELPIP Partner" /></a><a class="partner-lockup-frame" href="languagecert.html"><img src="' + languageCertLogo + '" alt="LanguageCert" /></a><a class="partner-lockup-frame" href="exam.html#exam-academic-partner"><img src="' + academicPartnerLogo + '" alt="Academic Partner" /></a></div></div><div class="hero-stats"><div class="stat"><strong>4+</strong><span>Countries</span></div><div class="stat"><strong>50+</strong><span>Projects</span></div><div class="stat"><strong>300+</strong><span>Services</span></div><div class="stat"><strong>24/7</strong><span>Support</span></div></div></div><div class="hero-art reveal is-visible"><div class="hero-art-shell glass"><img src="' + heroImage + '" alt="POS system preview" /></div></div></div></section>' + '<section class="section section-muted" id="about" data-country-display="SG"><div class="container">' + sectionHeader("About Us", '<span class="about-heading-line">Driving Business Growth Through Innovative</span>', 'smart technology solutions for business growth and digital transformation <br /><span class="about-heading-line">IT infrastructure and professional training.</span>') + '<div class="split-grid" style="grid-template-columns:1.1fr 0.9fr;"><div class="reveal"><h3 class="gradient-text">Intelligent Technology for Business Growth</h3><p class="lead">iLogic Tech is a forward-thinking technology company dedicated to delivering smart systems that simplify operations, increase productivity, and improve profitability across retail, restaurants, healthcare, and logistics.</p><p class="lead">We specialize in POS solutions, implementation, and support while also delivering networking, cybersecurity, and enterprise system services.</p><h3 class="gradient-text">Official LanguageCert Partner</h3>' + list(["Enable students to achieve international language qualifications.", "Support professionals in enhancing their global career opportunities.", "Provide a reliable and accessible certification platform."]) + '<h3 class="gradient-text">Our Commitment</h3>' + list(["POS software sales and deployment", "On-site and remote implementation", "System customization based on business requirements", "Ongoing technical support and maintenance", "Staff training for smooth system adoption"]) + '</div><div class="grid-2 reveal">' + [
+    app.innerHTML = header(true) + '<main><section class="hero" id="home" data-country-display="SG"><div class="container hero-grid"><div class="hero-copy reveal is-visible"><span class="eyebrow"><span class="eyebrow-dot"></span>Integrated Technology Solutions</span><h1><span class="gradient-text">Integrated POS Systems & IT Solutions for Businesses in Singapore and India</span><span class="subline"><h1>Technology Solutions for Business Growth</h1></span></h1><p class="lead" style= "text-align:justify; font-family:timesnewroman;">iLogic Tech Pte Ltd is a Singapore-headquartered global technology and consulting company delivering end-to-end digital transformation, testing infrastructure, and international education solutions.</p> <p class="lead" style="margin-top:0.5rem;text-align:justify; font-family:timesnewroman;">The organization operates through a multi-vertical ecosystem, integrating: <br><ul><li> Advanced Software Development </li><li>IT Infrastructure & Cybersecurity</li><li>Global Test Centre Operations</li><li> International Education & Certification Services </li></ul></p>  <p class="lead" style="margin-top:0.5rem;text-align:justify; font-family:timesnewroman;">With a strong presence across Singapore, India, Kuwait, and Ireland. iLogic Tech combines technology innovation with operational excellence to deliver scalable and future-ready solutions.</p>   <p class="lead" style="margin-top:0.5rem;text-align:justify; font-family:timesnewroman;">We specialize in developing customized platforms that streamline business operations & we are official partner of LanguageCert, Celpip(Prometric) & BeingCert. In addition, we offer industry-focused internship training programs that provide hands-on experience through real-time projects, equipping candidates with practical skills aligned with current market demands.</p><div class="hero-actions"><a class="btn btn-primary" href="#products">Explore Products</a><a class="btn btn-secondary" href="#about">Learn More</a></div><div class="partner-lockup"><p>Official Partner</p><div class="partner-lockup-row"><a class="partner-lockup-frame" href="exam.html#exam-celpip"><img src="' + celpipPartnerLogo + '" alt="CELPIP Partner" /></a><a class="partner-lockup-frame" href="languagecert.html"><img src="' + languageCertLogo + '" alt="LanguageCert" /></a><a class="partner-lockup-frame" href="exam.html#exam-academic-partner"><img src="' + academicPartnerLogo + '" alt="Academic Partner" /></a></div></div><div class="hero-stats"><div class="stat"><strong>4+</strong><span>Countries</span></div><div class="stat"><strong>50+</strong><span>Projects</span></div><div class="stat"><strong>300+</strong><span>Services</span></div><div class="stat"><strong>24/7</strong><span>Support</span></div></div></div><div class="hero-art reveal is-visible"><div class="hero-art-shell glass"><img src="' + heroImage + '" alt="POS system preview" /></div></div></div></section>' + '<section class="section section-muted" id="about" data-country-display="SG"><div class="container">' + sectionHeader("About Us", '<span class="about-heading-line">Driving Business Growth Through Innovative</span>', 'smart technology solutions for business growth and digital transformation <br /><span class="about-heading-line">IT infrastructure and professional training.</span>') + '<div class="split-grid" style="grid-template-columns:1.1fr 0.9fr;"><div class="reveal"><h3 class="gradient-text">Intelligent Technology for Business Growth</h3><p class="lead">iLogic Tech is a forward-thinking technology company dedicated to delivering smart systems that simplify operations, increase productivity, and improve profitability across retail, restaurants, healthcare, and logistics.</p><p class="lead">We specialize in POS solutions, implementation, and support while also delivering networking, cybersecurity, and enterprise system services.</p><h3 class="gradient-text">Official LanguageCert Partner</h3>' + list(["Enable students to achieve international language qualifications.", "Support professionals in enhancing their global career opportunities.", "Provide a reliable and accessible certification platform."]) + '<h3 class="gradient-text">Our Commitment</h3>' + list(["POS software sales and deployment", "On-site and remote implementation", "System customization based on business requirements", "Ongoing technical support and maintenance", "Staff training for smooth system adoption"]) + '</div><div class="grid-2 reveal">' + [
       ["Client-Centric", "Tailored solutions designed around your business needs."],
       ["Scalable and Secure", "Enterprise-grade security with room to grow."],
       ["R&D Innovation", "A dedicated research mindset that keeps solutions modern."],
@@ -1953,16 +1938,16 @@
       '</article>' +
       '<div class="about-detail-grid">' +
       '<article class="glass about-detail-card about-detail-media-card about-detail-media-card-reverse">' +
-      '<div class="about-detail-copy"><h3>Our Expertise</h3><p class="muted" style="text-align:justify;">End-to-end POS, software development, AI integration, and IT support services designed to help businesses operate efficiently, scale confidently, and embrace digital transformation.</p>' +
-      list(["Streamline your business operations with reliable POS system implementation, deployment, integration, and ongoing support tailored to your industry requirements.", "Ensure seamless technology adoption through expert planning, installation, configuration, data migration, and system optimization services.", "Develop scalable web, mobile, and enterprise applications that automate processes, improve productivity, and support long-term business growth.", "Keep your systems running smoothly with proactive monitoring, troubleshooting, software updates, cybersecurity support, and dedicated technical assistance."]) +
+      '<div class="about-detail-copy"><h3>Our Expertise</h3><p class="muted" style="text-align:justify;">End-to-end POS, software development, AI integration & IT support services designed to help businesses operate well efficiently, scale confidently and embrace digital transformation.</p>' +
+      list(["Streamline your business operations with reliable POS system implementation, deployment, integration and ongoing support tailored to your industry requirements.", "Ensure seamless technology adoption through expert planning, installation, configuration, data migration and system optimization services.", "Develop scalable web, mobile and enterprise applications that automate processes, improve productivity and support long-term business growth.", "Keep your systems running smoothly with proactive monitoring, troubleshooting, software updates, cybersecurity support and dedicated technical assistance."]) +
       '</div><div class="about-detail-media"><img src="' + aboutExpertiseImage + '" alt="Our Expertise" loading="lazy" /></div></article>' +
       '<article class="glass about-detail-card about-detail-media-card">' +
       '<div class="about-detail-media"><img src="' + aboutTrainingImage + '" alt="POS Implementation and Support" loading="lazy" /></div>' +
-      '<div class="about-detail-copy"><h3>POS Implementation & Support</h3><p class="muted" style="text-align:justify;">Our experienced team manages the complete POS lifecycle, from consultation and deployment to integration, training, and ongoing support. We ensure a seamless implementation process that minimizes disruption, optimizes operations, and supports long-term business growth.</p>' +
+      '<div class="about-detail-copy"><h3>POS Implementation & Support</h3><p class="muted" style="text-align:justify;">Our experienced team manages the complete POS lifecycle, from consultation and deployment to integration process, training and ongoing support. We ensure a seamless implementation process that minimizes disruption, optimizes operations, and supports long-term business growth.</p>' +
       list(["Identify the right POS strategy and technology solutions to meet your operational goals and business requirements.", "Professional installation, configuration, and integration of POS systems for reliable and efficient performance.", "Securely transfer business data, inventory records, customer information, and transaction history with minimal downtime.", "Comprehensive user training and onboarding programs to help your team maximize productivity and confidently use the POS system."]) +
       '</div></article>' +
       '<article class="glass about-detail-card about-detail-media-card about-detail-media-card-reverse about-detail-card-partner">' +
-      '<div class="about-detail-copy"><h3>Official LanguageCert Partner</h3><p class="muted" style="text-align:justify;">Empowering students, professionals, and organizations with internationally recognized English language certifications. As an official LanguageCert partner, we provide globally accepted certification programs that support academic success, career advancement, and international opportunities.</p>' +
+      '<div class="about-detail-copy"><h3>Official LanguageCert Partner</h3><p class="muted" style="text-align:justify;">Empowering students, professionals, and organizations with globally recognized English language certifications for learners. As an official LanguageCert partner, we provide globally accepted certification programs that support academic success, career advancement, and international opportunities.</p>' +
       list(["Earn internationally recognized English language qualifications trusted by educational institutions, employers, and organizations worldwide.", "Enhance your communication skills and strengthen your career prospects with certifications that demonstrate English proficiency in professional environments.", "Benefit from flexible, convenient, and learner-focused certification pathways designed to meet the needs of students, job seekers, and working professionals."]) +
       '</div><div class="about-detail-media"><img src="' + aboutPartnerImage + '" alt="Official LanguageCert Partner" loading="lazy" /></div></article>' +
       '<article class="glass about-detail-card about-detail-media-card about-detail-card-networking">' +
@@ -2463,6 +2448,18 @@ function projectsPage() {
       window.location.href = "mailto:info@ilogic.com.sg?subject=" + encodeURIComponent(String(data.get("subject"))) + "&body=" + encodeURIComponent(body);
     });
   }
+
+  // Add click handler for tailor image
+  const tailorImage = document.querySelector(".solution-image");
+  if (tailorImage) {
+    tailorImage.addEventListener("click", function() {
+      // Show alert for enquiry
+      alert("Check for Enquiry - Please fill out the contact form to proceed");
+      // Redirect to contact page
+      window.location.href = "index.html#contact";
+    });
+  }
+
   const hiringWidgetEl = document.getElementById("hiringWidget");
   const hiringChatbotEl = document.getElementById("hiringChatbot");
   const hiringMessagesEl = document.getElementById("hiringMessages");
